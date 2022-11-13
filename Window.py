@@ -60,7 +60,7 @@ class Window:
         for i in T_array:
             a = 0
             for population in Population_array:
-                population.interaction(Population_array)
+                population.method_runge_kutta(Population_array)
                 a += population.N
             print("Alln= ", a)
         for population in Population_array:

@@ -25,3 +25,24 @@ class Population:
             f += Config.coefficients[self.id][population.id] * population.N * self.N
         self.N += Config.delta * (self.multiplication() + f)
         print("----------------")
+
+    def interaction_2(self, populations):
+        f = 0
+        for population in populations:
+            if self == population:
+                continue
+            f += Config.coefficients[self.id][population.id] * population.N * self.N
+        f = self.multiplication() + f
+        return f
+
+    def method_runge_kutta(self, populations):
+        self.array_N.append(self.N)
+        a = self.N
+        k1 = self.interaction_2(populations)
+        self.N = a + 0.5 * Config.delta * k1
+        k2 = self.interaction_2(populations)
+        self.N = a + 0.5 * Config.delta * k2
+        k3 = self.interaction_2(populations)
+        self.N = a + Config.delta * k3
+        k4 = self.interaction_2(populations)
+        self.N = a + (k1 + 2 * k2 + 2 * k3 + k4) * Config.delta / 6
